@@ -10,7 +10,8 @@ import {
     Dimensions,
     TouchableOpacity,
     Platform,
-    TextInput
+    TextInput,
+    AsyncStorage
 } from 'react-native';
 import SecondScreen from "./SecondScreen";
 import Camera from "../CameraPage/Camera"
@@ -29,11 +30,24 @@ class TabMainScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        state = {
+            vip: ''
+        };
+        this.getVip()
     }
 
-    state = {
-        search: '',
-    };
+    state={
+        search: ''
+    }
+    
+
+    async getVip() {
+        const vip = AsyncStorage.getItem('vip')
+        this.setState({
+            vip: vip
+        })
+    }
+
 
     updateSearch = search => {
         this.setState({ search });
@@ -54,6 +68,13 @@ class TabMainScreen extends React.Component {
 
     render() {
         const { search } = this.state;
+        let photo
+        if(this.state.vip == 0){
+            photo = <TimerPhoto1></TimerPhoto1>
+        }
+        else{
+            photo = <TimerPhoto></TimerPhoto>
+        }
 
         return (
             <View style={{ flex: 1 }}>
@@ -88,7 +109,8 @@ class TabMainScreen extends React.Component {
                             directionalLockEnabled={true}
                             showsVerticalScrollIndicator={false}
                             bounces={false}>
-                            <TimerPhoto></TimerPhoto>
+                            {/* <TimerPhoto></TimerPhoto> */}
+                            {photo}
                             <View style={{ width: winHeight, backgroundColor: 'rgba(255,255,255,1)', marginTop: 5 }}>
 
                                 <View style={{ flexDirection: 'row', marginBottom: 5 }}>
@@ -267,7 +289,9 @@ class TimerPhoto extends React.Component {
             currentPage: 0,
         }
     }
+
     render() {
+        
         return (
 
             <ScrollView
@@ -282,6 +306,74 @@ class TimerPhoto extends React.Component {
                 <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/2.png' }} style={{ width: winWidth, height: WH * 584 }} />
                 <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/3.png' }} style={{ width: winWidth, height: WH * 584 }} />
                 <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/4.png' }} style={{ width: winWidth, height: WH * 584 }} />
+            </ScrollView>
+        )
+    }
+    componentDidMount() {
+        this.startTimer();
+    }
+    onScrollBeginDrag() {
+        clearInterval(this.timer)
+    }
+    onScrollEndDrag() {
+        this.startTimer();
+    }
+    onAnimationEnd(e) {
+        let offSetX = e.nativeEvent.contentOffset.x;
+        this.setState({
+            currentPage: Math.floor(offSetX / winWidth)
+        })
+    }
+
+
+
+    startTimer() {
+        let ScrollView = this.refs.ScrollView;
+        this.timer = setInterval(() => {
+            let activePage = 0;
+            if (this.state.currentPage >= 4) {
+                activePage = 0;
+            } else {
+                activePage = this.state.currentPage + 1;
+            }
+            this.setState({
+                currentPage: activePage
+            })
+            let timerX = activePage * winWidth;
+            ScrollView.scrollTo({
+                x: timerX,
+                animated: true
+            })
+        }, 2500)
+    }
+
+    componentWillUnmount() {
+        this.timer && clearInterval(this.timer);
+    }
+}
+
+class TimerPhoto1 extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            currentPage: 0,
+        }
+    }
+    render() {
+        return (
+
+            <ScrollView
+                ref="ScrollView"
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={true}
+                onMomentumScrollEnd={(e) => this.onAnimationEnd(e)}
+                style={{ height: WH * 584 }}
+            >
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/5d173e825eabf.jpg' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/20141009122608_92648.jpg' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/about-1.jpg' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/132035zo7lod23xujqm7v9.png' }} style={{ width: winWidth, height: WH * 584 }} />
             </ScrollView>
         )
     }

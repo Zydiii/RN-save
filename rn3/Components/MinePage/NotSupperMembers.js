@@ -6,6 +6,7 @@ import LottieView from 'lottie-react-native';
 
 var Dimensions = require('Dimensions');
 var screenWidth = Dimensions.get('window').width;
+var json = ''
 
 const onButtonPress = async () => {
   console.log('超级会员');
@@ -100,8 +101,47 @@ export default class NotSuperMembers extends React.Component {
     })
   };
 
+  async updateInfo() {
+    await AsyncStorage.setItem('vip', json.vip.toString())
+    await AsyncStorage.setItem('vipdate', json.vipdate.toString())
+  }
+
+  async getInfo() {
+    const userToken = await AsyncStorage.getItem('userToken', '');
+    const username = await AsyncStorage.getItem('username');
+
+    let url = 'http://202.120.40.8:30454/users/users/username/' + username;
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + userToken);
+
+    return fetch(url, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then(response => {
+        console.log(response)
+
+        if (!response.ok) {
+          throw new Error('Failed to Log in')
+        }
+        return response.json()
+
+      })
+      .then(jsons => {
+        console.log(jsons.id)
+        json = jsons
+        console.log("更新信息")
+        console.log(json.vipdate)
+        this.updateInfo()
+        // return 
+        // return json.access_token
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render() {
-    this._retrieveData();
     return (
       <View>
         <Header
@@ -112,7 +152,11 @@ export default class NotSuperMembers extends React.Component {
           // leftComponent={{ icon: 'menu', color: '#fff' }}
           // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
           // rightComponent={{ icon: 'home', color: '#fff' }}
-          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.navigate('UserPage')}>
+          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => {
+            this.getInfo()
+            this.props.navigation.navigate('UserPage')
+          }
+          }>
             <Icon
               name='arrow-left'
               type='evilicon'

@@ -157,6 +157,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Slider, Image, AsyncStorage }
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 var Dimensions = require('Dimensions');
 var screenWidth = Dimensions.get('window').width;
+import { Avatar, Header, Card, ListItem, Button, Icon, Rating, PricingCard } from 'react-native-elements';
+
 
 export default class DetailsScreen extends React.Component {
 

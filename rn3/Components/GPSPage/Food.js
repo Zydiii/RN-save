@@ -48,7 +48,7 @@ export default class Food extends React.Component {
                 // result: newlist,
                 list: [
                     {
-                        pic: 'http://pv18mucav.bkt.clouddn.com/shopping.png',
+                        pic: 'http://pv18mucav.bkt.clouddn.com/food.png',
                         name: roundData[i].name,
                         address: roundData[i].address,
                         city: roundData[i].city,

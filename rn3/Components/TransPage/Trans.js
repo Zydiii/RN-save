@@ -15,6 +15,7 @@ import {
     Modal
 } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer';
+
 import Dialog, {
     DialogTitle,
     DialogContent,
@@ -119,63 +120,30 @@ export default class TestRNIMUI extends Component {
             scaleAnimationDialog: false,
             slideAnimationDialog: false,
             pic: '',
-            images: []
+            images: [],
+            visible: false
         }
-
 
         this.updateLayout = this.updateLayout.bind(this);
         this.onMsgClick = this.onMsgClick.bind(this);
         this.messageListDidLoadEvent = this.messageListDidLoadEvent.bind(this);
 
-        // JMessage.init({
-        //     appkey: "6a8022404564c09c1622da33",
-        //     isOpenMessageRoaming: false, // 是否开启消息漫游，默认不开启
-        //     isProduction: true, // 是否为生产模式
-        // })
+        this.getVip()
+    }
 
-        // //登录
-        // JMessage.login({
-        //     username: "zydiii",
-        //     password: "123456"
-        // }, () => { alert("登陆成功") }, (error) => {/*登录失败回调*/ })
-
-        // // var listener = (message) => {
-        // //     // 收到的消息会返回一个消息对象. 对象字段可以参考对象说明
-        // //     console.log(message)
-        // //     alert("收到消息")
-        // //   }
-
-        // // JMessage.addReceiveMessageListener(listener) // 添加监听
-
-        // JMessage.getHistoryMessages({
-        //     type: 'single', username: 'zydiii',
-        //     appKey: '6a8022404564c09c1622da33', from: 0, limit: 10
-        // },
-        //     (msgArr) => { // 以参数形式返回消息对象数组
-        //         // do something.
-        //         console.log(msgArr)
-
-        //     }, (error) => {
-        //         var code = error.code
-        //         var desc = error.description
-        //     })
-
-
-        // JMessage.sendTextMessage({
-        //     type: 'single', username: 'test', appKey: '6a8022404564c09c1622da33',
-        //     text: 'hello world', extras: { key1: 'value1' }, messageSendingOptions: JMessage.messageSendingOptions
-        // },
-        //     (msg) => {
-        //         // do something.
-        //         alert('send')
-
-        //     }, (error) => {
-        //         var code = error.code
-        //         var desc = error.description
-        //     })
-
-
-
+    async getVip() {
+        const vip = await AsyncStorage.getItem('vip', '');
+        if (vip == 1) {
+            this.setState({
+                visible: false
+            })
+        }
+        else {
+            this.setState({
+                visible: true
+            })
+        }
+        console.log(this.state.visible)
     }
 
     componentDidMount() {
@@ -518,77 +486,153 @@ export default class TestRNIMUI extends Component {
         const to = await AsyncStorage.getItem('to')
         const iid = await AsyncStorage.getItem('id')
         const id = parseFloat(iid)
+        console.log(pathTo)
+
         RNFS.readFile(pathTo, 'base64')
             .then((content) => {
                 console.log(content)
-                let url = "http://202.120.40.8:30454/translate/translate/voice"
-                let formData = new FormData();
-                this.tmp = content
-                formData.append("voice", this.tmp);
-                formData.append("id", id);
-                formData.append("from", from)
-                formData.append("to", to)
+                const appKey = '3732bd9603c078bc'
+                const salt = '123'
+                const key = 'rI86cdVLfXWGMhRGkfyFYz000Y62fJCY'
+                var sign = appKey + content + salt + key
+                var md = forge.md.md5.create();
+                md.update(sign);
+                var password = md.digest().toHex();
+                console.log('password')
+                console.log(password.toUpperCase())
+
+                let url = "http://openapi.youdao.com/speechtransapi?q=" + content + '&from=' + from +
+                    '&to=' + to + '&appKey=' + appKey + '&salt=' + salt + '&sign=' + password + 
+                    '&format=' + 'wav' + '&rate=' + '8000' + '&channel=' + '1' + '&type=' + '1'
 
                 fetch(url, {
-                    credentials: 'include',
                     method: 'POST',
-                    headers: {
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + userToken
-                    },
-                    body: formData
+                    header: new Headers({
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                      })        
                 }).then((response) => {
+                    console.log(response)
                     return response.json();
                 })
                     .then((myJson) => {
                         console.log(myJson)
-                        return myJson.translation
                     })
-                    .then((result) => {
-                        console.log(result[0])
-                        return result[0]
-                    })
-                    .then((getResult) => {
-                        var message = constructNormalMessage()
-                        message.msgType = "custom"
-                        message.msgId = "10"
-                        message.status = "send_going"
-                        message.isOutgoing = false
-                        message.content = getResult
-                        // message.contentSize = { 'height': 100, 'width': 200 }
-                        message.extras = { "extras": "fdfsf" }
-                        var user = {
-                            userId: "",
-                            displayName: "",
-                            avatarPath: ""
-                        }
-                        user.displayName = ""
-                        user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
-                        message.fromUser = user
-                        AuroraIController.appendMessages([message]);
-                    })
+                    // .then((result) => {
+                    //     console.log(result[0])
+                    //     return result[0]
+                    // })
+                    // .then((getResult) => {
+                    //     var message = constructNormalMessage()
+                    //     message.msgType = "custom"
+                    //     message.msgId = "10"
+                    //     message.status = "send_going"
+                    //     message.isOutgoing = false
+                    //     message.content = getResult
+                    //     // message.contentSize = { 'height': 100, 'width': 200 }
+                    //     message.extras = { "extras": "fdfsf" }
+                    //     var user = {
+                    //         userId: "",
+                    //         displayName: "",
+                    //         avatarPath: ""
+                    //     }
+                    //     user.displayName = ""
+                    //     user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
+                    //     message.fromUser = user
+                    //     AuroraIController.appendMessages([message]);
+                    // })
                     .catch((error) => {
-                        console.log(error)
-                        var message = constructNormalMessage()
-                        message.msgType = "custom"
-                        message.msgId = "10"
-                        message.status = "send_going"
-                        message.isOutgoing = false
-                        message.content = '哎呀，出错啦'
-                        // message.contentSize = { 'height': 100, 'width': 200 }
-                        message.extras = { "extras": "fdfsf" }
-                        var user = {
-                            userId: "",
-                            displayName: "",
-                            avatarPath: ""
-                        }
-                        user.displayName = ""
-                        user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
-                        message.fromUser = user
-                        AuroraIController.appendMessages([message]);
+                        // console.log(error)
+                        // var message = constructNormalMessage()
+                        // message.msgType = "custom"
+                        // message.msgId = "10"
+                        // message.status = "send_going"
+                        // message.isOutgoing = false
+                        // message.content = '哎呀，出错啦'
+                        // // message.contentSize = { 'height': 100, 'width': 200 }
+                        // message.extras = { "extras": "fdfsf" }
+                        // var user = {
+                        //     userId: "",
+                        //     displayName: "",
+                        //     avatarPath: ""
+                        // }
+                        // user.displayName = ""
+                        // user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
+                        // message.fromUser = user
+                        // AuroraIController.appendMessages([message]);
                     })
 
             });
+        // RNFS.readFile(pathTo, 'base64')
+        // .then((content) => {
+        //     console.log(content)
+        //     let url = "http://202.120.40.8:30454/translate/translate/voice"
+        //     let formData = new FormData();
+        //     this.tmp = content
+        //     formData.append("voice", this.tmp);
+        //     formData.append("id", id);
+        //     formData.append("from", from)
+        //     formData.append("to", to)
+
+        //     fetch(url, {
+        //         credentials: 'include',
+        //         method: 'POST',
+        //         headers: {
+        //             // 'Content-Type': 'application/x-www-form-urlencoded',
+        //             'Authorization': 'Bearer ' + userToken
+        //         },
+        //         body: formData
+        //     }).then((response) => {
+        //         return response.json();
+        //     })
+        //         .then((myJson) => {
+        //             console.log(myJson)
+        //             return myJson.translation
+        //         })
+        //         .then((result) => {
+        //             console.log(result[0])
+        //             return result[0]
+        //         })
+        //         .then((getResult) => {
+        //             var message = constructNormalMessage()
+        //             message.msgType = "custom"
+        //             message.msgId = "10"
+        //             message.status = "send_going"
+        //             message.isOutgoing = false
+        //             message.content = getResult
+        //             // message.contentSize = { 'height': 100, 'width': 200 }
+        //             message.extras = { "extras": "fdfsf" }
+        //             var user = {
+        //                 userId: "",
+        //                 displayName: "",
+        //                 avatarPath: ""
+        //             }
+        //             user.displayName = ""
+        //             user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
+        //             message.fromUser = user
+        //             AuroraIController.appendMessages([message]);
+        //         })
+        //         .catch((error) => {
+        //             console.log(error)
+        //             var message = constructNormalMessage()
+        //             message.msgType = "custom"
+        //             message.msgId = "10"
+        //             message.status = "send_going"
+        //             message.isOutgoing = false
+        //             message.content = '哎呀，出错啦'
+        //             // message.contentSize = { 'height': 100, 'width': 200 }
+        //             message.extras = { "extras": "fdfsf" }
+        //             var user = {
+        //                 userId: "",
+        //                 displayName: "",
+        //                 avatarPath: ""
+        //             }
+        //             user.displayName = ""
+        //             user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
+        //             message.fromUser = user
+        //             AuroraIController.appendMessages([message]);
+        //         })
+
+        // });
     }
 
     onCancelRecordVoice = () => {
@@ -795,6 +839,40 @@ export default class TestRNIMUI extends Component {
         console.log(this.state.images)
         return (
             <View style={styles.container}>
+
+                <Dialog
+                    visible={this.state.visible}
+                    dialogTitle={<DialogTitle title="温馨提示" />}
+                    footer={
+                        <DialogFooter>
+                            <DialogButton
+                                text="取消"
+                                onPress={() => {
+                                    this.setState({
+                                        visible: false
+                                    })
+                                    this.props.navigation.navigate('Main')
+                                }
+                                }
+                            />
+                            <DialogButton
+                                text="确定"
+                                onPress={() => {
+                                    this.setState({
+                                        visible: false
+                                    })
+                                    this.props.navigation.navigate('NotSuperMembers')
+                                }}
+                            />
+                        </DialogFooter>
+                    }
+                >
+                    <DialogContent>
+                        <Text>
+                            尊敬的用户，您还没有开通此功能。是否前往充值页面进行充值解锁此功能？
+                        </Text>
+                    </DialogContent>
+                </Dialog>
                 <Header
                     statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
                     containerStyle={{ backgroundColor: "black" }}

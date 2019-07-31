@@ -63,7 +63,7 @@ export default StyleSheet.create({
   },
 
   mapStyle: {
-    height: 380,
+    height: 420,
     backgroundColor: '#F5F5F9'
   },
   map: {

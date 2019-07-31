@@ -166,10 +166,11 @@ export default class SignInForm extends Component {
       headers: headers,
     })
       .then(response => {
+        console.log(response)
+
         if (!response.ok) {
           throw new Error('Failed to Log in')
         }
-        console.log(response)
         return response.json()
 
       })

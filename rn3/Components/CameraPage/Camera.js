@@ -8,12 +8,20 @@
  */
 
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Slider, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Slider, Image, Platform, AsyncStorage } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { DrawerActions } from 'react-navigation';
 //import { RNFS } from 'react-native-fs';
 //import Loading from './Loading';
 import { SearchBar, Header, Icon } from 'react-native-elements';
+import Dialog, {
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+  DialogButton,
+  SlideAnimation,
+  ScaleAnimation,
+} from 'react-native-popup-dialog';
 
 const landmarkSize = 2;
 
@@ -49,31 +57,61 @@ export default class CameraScreen extends React.Component {
     ),
   };
 
-  state = {
-    flash: 'off',
-    zoom: 0,
-    autoFocus: 'on',
-    depth: 0,
-    type: 'back',
-    whiteBalance: 'auto',
-    ratio: '16:9',
-    ratios: [],
-    photoId: 1,
-    showGallery: false,
-    photos: [],
-    faces: [],
-    tmp: '',
-    landmark: '',
-    visible: false,
-    result: [],
-    recordOptions: {
-      mute: false,
-      maxDuration: 5,
-      quality: RNCamera.Constants.VideoQuality["288p"],
-    },
-    isRecording: false,
-    focusedScreen: ''
-  };
+  constructor(props) {
+    super(props);
+    let initHeight;
+    if (Platform.OS === "ios") {
+      initHeight = 46
+    } else {
+      initHeight = 50
+    }
+    this.state = {
+      flash: 'off',
+      zoom: 0,
+      autoFocus: 'on',
+      depth: 0,
+      type: 'back',
+      whiteBalance: 'auto',
+      ratio: '16:9',
+      ratios: [],
+      photoId: 1,
+      showGallery: false,
+      photos: [],
+      faces: [],
+      tmp: '',
+      landmark: '',
+      result: [],
+      recordOptions: {
+        mute: false,
+        maxDuration: 5,
+        quality: RNCamera.Constants.VideoQuality["288p"],
+      },
+      isRecording: false,
+      focusedScreen: '',
+      visibleL: false,
+      visible: false
+
+    }
+
+    this.getVip()
+  }
+
+  async getVip() {
+    const vip = await AsyncStorage.getItem('vip', '');
+    if (vip == 1) {
+      this.setState({
+        visibleL: false
+      })
+    }
+    else {
+      this.setState({
+        visibleL: true
+      })
+    }
+    console.log(this.state.visibleL)
+  }
+
+
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -317,7 +355,7 @@ export default class CameraScreen extends React.Component {
           }}
           style={{
             flex: 1,
-            marginTop: 130
+            marginTop: 90
           }}
           type={this.state.type}
           flashMode={this.state.flash}
@@ -413,6 +451,39 @@ export default class CameraScreen extends React.Component {
       {
         this.state.visible == true ? (<Loading />) : (null)
       }
+      <Dialog
+        visible={this.state.visibleL}
+        dialogTitle={<DialogTitle title="温馨提示" />}
+        footer={
+          <DialogFooter>
+            <DialogButton
+              text="取消"
+              onPress={() => {
+                this.setState({
+                  visibleL: false
+                })
+                this.props.navigation.navigate('Main')
+              }
+              }
+            />
+            <DialogButton
+              text="确定"
+              onPress={() => {
+                this.setState({
+                  visibleL: false
+                })
+                this.props.navigation.navigate('NotSuperMembers')
+              }}
+            />
+          </DialogFooter>
+        }
+      >
+        <DialogContent>
+          <Text>
+            尊敬的用户，您还没有开通此功能。是否前往充值页面进行充值解锁此功能？
+                        </Text>
+        </DialogContent>
+      </Dialog>
       {/* { */}
       <Header
         statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}

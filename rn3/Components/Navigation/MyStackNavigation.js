@@ -9,6 +9,7 @@ import { createStackNavigator, createAppContainer, DrawerActions } from 'react-n
 import ThirdScreen from "./ThirdScreen";
 import TabMainScreen from "./TabMainScreen";
 import MainPage from "../MainPage/Main"
+import Camera from "../CameraPage/Camera"
 import DetailScreen from "../CameraPage/DetailScreen"
 import NothinScreen from "../CameraPage/NothingScreen"
 import UserPage from "../MinePage/Mine"
@@ -61,6 +62,24 @@ const MyStackNavigation = createStackNavigator({
 
     Trans: {
         screen: Trans,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Camera: {
+        screen: Camera,
         navigationOptions: ({ navigation }) => ({
             headerTitleStyle: {
                 alignSelf: 'center',
@@ -263,6 +282,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
