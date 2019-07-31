@@ -87,18 +87,19 @@ const MyDrawerNavigation = createDrawerNavigator(
                 ),
             },
         },
-        GPS: {
-            screen: GPS,
-            navigationOptions: {
-                drawerLabel: '定位服务',
-                drawerIcon: ({ tintColor }) => (
-                    <Image
-                        source={require('../Assets/GPSPage/GPS_unpress.png')}
-                        style={ {tintColor: tintColor, width: 28, height: 28,}}
-                    />
-                ),
-            },
-        },
+        
+        // GPS: {
+        //     screen: GPS,
+        //     navigationOptions: {
+        //         drawerLabel: '定位服务',
+        //         drawerIcon: ({ tintColor }) => (
+        //             <Image
+        //                 source={require('../Assets/GPSPage/GPS_unpress.png')}
+        //                 style={ {tintColor: tintColor, width: 28, height: 28,}}
+        //             />
+        //         ),
+        //     },
+        // },
         // Drawer: {
         //     screen: DrawerSecondScreen,
         //     navigationOptions: {

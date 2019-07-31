@@ -23,6 +23,7 @@ import * as Animatable from 'react-native-animatable'
 import { BackHandler } from 'react-native';
 var token = ''
 var status = 0
+var json = ''
 
 export default class SignInForm extends Component {
   constructor(props) {
@@ -117,6 +118,8 @@ export default class SignInForm extends Component {
     let headers = new Headers();
     headers.append('Authorization', 'Basic ' + base64.encode(username1 + ":" + password1));
     // headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    console.log("登录信息")
+    console.log('Basic ' + base64.encode(username1 + ":" + password1))
     let formData = new FormData();
     formData.append("username", this.state.email);
     formData.append("password", this.state.password);
@@ -152,55 +155,69 @@ export default class SignInForm extends Component {
 
   };
 
-  getBaike = async (landmark) => {
+  async getInfo(userToken) {
 
-    let url = "http://202.120.40.8:30454/imgidentify/imgidentify/baike?keyword='长城'";
-    let formData = new FormData()
-    //          formData.append("keyword", landmark)
-    //          const userToken = await AsyncStorage.getItem('userToken', '');
-    //          console.log('userToken')
-    //          console.log(userToken)
-    console.log(landmark)
+    let url = 'http://202.120.40.8:30454/users/users/username/' + this.state.email;
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + userToken);
 
-    fetch(url, {
+     return fetch(url, {
       method: 'GET',
-      headers: {
-        'Authorization': 'Basic ZWFnbGVleWU6dGhpc2lzc2VjcmV0'
-      },
+      headers: headers,
     })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
-          console.log("Network response was not ok.");
+          throw new Error('Failed to Log in')
         }
         console.log(response)
-        console.log(response.text())
-        return response.text()
+        return response.json()
+
       })
-      .then((result) => {
-        console.log('百科结果')
-        console.log(result)
+      .then(jsons => {
+        console.log(jsons.id)
+        json = jsons
+        console.log("信息")
+        console.log(json.id)
+        // return 
+        // return json.access_token
       })
       .catch((error) => {
         console.log(error)
       })
-  };
+  }
+
 
   _handleSignIn = async () => {
     // TODO: do something
-    // this.setState({ errMsg: '登录中...' })
-    // await this.LogAction()
-    // await AsyncStorage.setItem('userToken', token).then(() => {
-    //       setTimeout(()=> {
-    //       // this._handleGoBack()
-    //     }, 1000)
+    this.setState({ errMsg: '登录中...' })
+    await this.LogAction()
+    await AsyncStorage.setItem('userToken', token)
+    // .then(() => {
+    //   setTimeout(() => {
+    //     // this._handleGoBack()
+    //   }, 1000)
     // });
-    // const userToken = await AsyncStorage.getItem('userToken','');
-    // console.log('userToken')
-    // console.log(userToken)
-    // token = ''
-    // if (userToken != null) {
-    this.props.goToHomeScreen()
-    // }
+    const userToken = await AsyncStorage.getItem('userToken', '');
+    console.log('userToken')
+    console.log(userToken)
+    token = ''
+    if (userToken != null) {
+      await this.getInfo(userToken)
+      console.log('得到信息')
+      console.log(json.id)
+      await AsyncStorage.setItem('username', json.username.toString())      
+      await AsyncStorage.setItem('id', json.id.toString())
+      await AsyncStorage.setItem('vip', json.vip.toString())
+      await AsyncStorage.setItem('vipdate', json.vipdate.toString())
+      await AsyncStorage.setItem('from', 'auto')
+      await AsyncStorage.setItem('to', 'zh-CHS')
+
+      // const id = await AsyncStorage.getItem('from', '');
+      // console.log('from')
+      // console.log(id)
+
+      this.props.goToHomeScreen()
+    }
 
 
     // firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -257,7 +274,7 @@ const styles = StyleSheet.create({
     width: 280,
     textAlign: 'center',
     alignSelf: 'center',
-    color: getColor(),
+    color: '#ffffff',
     marginBottom: 10,
     fontSize: 14,
     fontFamily: 'Roboto-Regular'

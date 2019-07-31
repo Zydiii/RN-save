@@ -14,6 +14,9 @@ import {
 import { StackNavigator } from 'react-navigation';
 import { requestLocationPermission } from './utils'
 import styles from './styles'
+import { SearchBar, Header, Icon } from 'react-native-elements';
+import { DrawerActions } from 'react-navigation';
+
 
 import { MapView } from 'react-native-amap3d'
 import VectorIcon from 'react-native-vector-icons/MaterialIcons';
@@ -170,6 +173,30 @@ export default class Trans extends React.Component {
       //     title="Go back home"
       // />
       <View>
+        <Header
+          statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+          containerStyle={{ backgroundColor: "black" }}
+          placement="left"
+          backgroundImage={{ uri: 'http://pv18mucav.bkt.clouddn.com/016%20Deep%20Blue.png' }}
+          // leftComponent={{ icon: 'menu', color: '#fff' }}
+          // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+          // rightComponent={{ icon: 'home', color: '#fff' }}
+          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.goBack()}>
+            <Icon
+              name='arrow-left'
+              type='evilicon'
+              size={30}
+              color='#ffffff' />
+          </TouchableOpacity>}
+          // centerComponent={<MyCustomCenterComponent />}
+          // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+          //   <Icon
+          //     name='location'
+          //     type='evilicon'
+          //     size={30}
+          //     color='#ffffff' />
+          // </TouchableOpacity>}
+        />
         <View style={styles.mapStyle}>
           <MapView
             locationEnabled
@@ -194,7 +221,7 @@ export default class Trans extends React.Component {
           bounces={false}
         >
           <View style={styles.containerStyle1}>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('FoodPage', { longtitude: longtitude, latitude: latitude})}}>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('FoodPage', { longtitude: longtitude, latitude: latitude }) }}>
               <View style={styles.containerStyle}>
                 <View style={styles.leftStyle}>
                   <Image style={{ width: 20, height: 20, resizeMode: 'contain' }} source={require('../Assets/GPSPage/food.png')}></Image>
@@ -205,7 +232,7 @@ export default class Trans extends React.Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('HotelPage', { longtitude: longtitude, latitude: latitude}) }}>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('HotelPage', { longtitude: longtitude, latitude: latitude }) }}>
               <View style={styles.containerStyle}>
                 <View style={styles.leftStyle}>
                   <Image style={{ width: 20, height: 20, resizeMode: 'contain' }} source={require('../Assets/GPSPage/hotel.png')}></Image>
@@ -216,7 +243,7 @@ export default class Trans extends React.Component {
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ShopPage', { longtitude: longtitude, latitude: latitude}) }}>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ShopPage', { longtitude: longtitude, latitude: latitude }) }}>
               <View style={styles.containerStyle}>
                 <View style={styles.leftStyle}>
                   <Image style={{ width: 20, height: 20, resizeMode: 'contain' }} source={require('../Assets/GPSPage/shop.png')}></Image>

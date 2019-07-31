@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, AsyncStorage } from "react-native";
 import { ButtonGroup, ListItem } from "react-native-elements"
 import Picker from 'react-native-wheel-picker'
 var PickerItem = Picker.Item;
@@ -16,9 +16,9 @@ export default class ChangeLang extends React.Component {
             selectedItem1: 0,
             itemList1: ['中文', '英文', '日文', '韩文', '法文', '西班牙文', '葡萄牙文', '意大利文', '俄文', '越南文', '德文', '阿拉伯文', '印尼文'],
             selectedItem2: 0,
-            itemList2: ['中文','日文'],
+            itemList2: ['中文', '日文'],
             selectedItem3: 0,
-            itemList3: ['中文','英文'],
+            itemList3: ['中文', '英文'],
             selectedItem4: 0,
             itemList4: ['中文'],
         }
@@ -27,8 +27,8 @@ export default class ChangeLang extends React.Component {
         this.onPickerSelect1 = this.onPickerSelect1.bind(this)
     }
 
-    onPickerSelect(index) {
-        this.setState({
+    onPickerSelect = async (index) => {
+        await this.setState({
             selectedItem: index,
             src: this.state.itemList[index]
         }, function () {
@@ -37,13 +37,61 @@ export default class ChangeLang extends React.Component {
             console.log("选择源语言")
             console.log(this.state.src)
         })
+        var param = this.getName(this.state.src)
+        await AsyncStorage.setItem('from', param)
         // src =  this.state.itemList[this.state.selectedItem]
 
         // this.forceUpdate()
+
     }
 
-    onPickerSelect1(index) {
-        this.setState({
+    getName(name) {
+        if (name == '中文') {
+            return 'zh-CHS'
+        }
+        else if (name == '英文') {
+            return 'en'
+        }
+        else if (name == '日文') {
+            return 'ja'
+        }
+        else if (name == '韩文') {
+            return 'ko'
+        }
+        else if (name == '法文') {
+            return 'fr'
+        }
+        else if (name == '西班牙文') {
+            return 'es'
+        }
+        else if (name == '葡萄牙文') {
+            return 'pt'
+        }
+        else if (name == '意大利文') {
+            return 'it'
+        }
+        else if (name == '俄文') {
+            return 'ru'
+        }
+        else if (name == '越南文') {
+            return 'vi'
+        }
+        else if (name == '德文') {
+            return 'de'
+        }
+        else if (name == '阿拉伯文') {
+            return 'ar'
+        }
+        else if (name == '印尼文') {
+            return 'id'
+        }
+        else if (name == '自动识别') {
+            return 'auto'
+        }
+    }
+
+    onPickerSelect1 = async (index) => {
+        await this.setState({
             selectedItem1: index,
             dst: this.state.itemList1[index]
         }, function () {
@@ -52,6 +100,8 @@ export default class ChangeLang extends React.Component {
             console.log("选择目标语言")
             console.log(this.state.dst)
         })
+        var param = this.getName(this.state.dst)
+        await AsyncStorage.setItem('to', param)
     }
 
     onAddItem = () => {
@@ -131,17 +181,17 @@ export default class ChangeLang extends React.Component {
     }
 
     renderDstList() {
-        let list 
-        if(this.state.src == '中文'){
+        let list
+        if (this.state.src == '中文') {
             list = this.state.itemList1
         }
-        else if(this.state.src == '英文'){
+        else if (this.state.src == '英文') {
             list = this.state.itemList2
         }
-        else if(this.state.src == '日文'){
+        else if (this.state.src == '日文') {
             list = this.state.itemList3
         }
-        else{
+        else {
             list = this.state.itemList4
         }
 

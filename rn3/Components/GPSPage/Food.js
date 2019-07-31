@@ -47,20 +47,23 @@ export default class Food extends React.Component {
         }
     }
 
-    getPic(pic, i) {
-        let url = "http://202.120.40.8:30454/imgidentify/imgidentify/py"
+    async getPic(pic, i) {
+        let url = "http://202.120.40.8:30454/imgidentify/imgidentify/getfood"
+        const userToken = await AsyncStorage.getItem('userToken', '');
+
         let formData = new FormData()
         formData.append("url", pic)
         return fetch(url, {
             credentials: 'include',
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer 29be86b9-4071-41c3-a50e-865cb8ca3b24'
+                'Authorization': 'Bearer ' + userToken
             },
             body: formData
         }).then((response) => {
             return response.text()
         }).then((r) => {
+            console.log(r)
             let newlist = this.state.result;
             newlist[i] = r
             this.setState({
@@ -106,7 +109,7 @@ export default class Food extends React.Component {
     }
 
     render() {
-        console.log(roundData)
+        // console.log(roundData)
         return (
 
             <ScrollView

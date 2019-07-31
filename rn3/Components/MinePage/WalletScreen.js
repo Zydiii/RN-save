@@ -12,8 +12,88 @@ var isVIP = 1;
 var username = 'Arwen';
 var date = '2019-10-11';
 
+const onButtonPress = async () => {
+  console.log('在钱包里面');
+  // try {
+  //   var id = await AsyncStorage.getItem('id');
+  //   if (id !== null) {
+  //     // We have data!!
+  //     console.log(id);
+  //   }
+  // } catch (error) {
+  //   console.log('error');
+  // }
+  var id = '1'
+  console.log(id)
+  let url = 'http://2493s0p911.zicp.vip:15832/alipay.trade.wap.pay-java-utf-8/wappay/pay.jsp?guid='+id;
+  Linking.addEventListener('url', this._handleOpenURL);
+  Linking.openURL(url);
+  console.log(url)
+  this.timer = setInterval(() => {
+    console.log("把一个定时器的引用挂在this上");
+    let url1 = "http://202.120.40.8:30454/users/users/id/"+id;
+    console.log(id)
+    let formData = new FormData();
+    formData.append("id", id);
+    fetch(url1, {
+        method: 'GET',
+        headers: {
+         'Authorization': "bearer c13ecc9d-21b2-4ce1-9399-501e9672b35d"
+        },
+    }).then((response) => {
+        return response.text()
+    }).then((result)=>{
+        console.log(result.vip);
+        console.log(result.vipdate);
+        AsyncStorage.setItem('date', result.vipdate).then(() => {
+              setTimeout(()=> {
+            }, 1000)
+        });
+        AsyncStorage.setItem('vip', result.vip).then(() => {
+               setTimeout(()=> {
+             }, 1000)
+         });
+    }).catch((error) => {
+        console.log(error)
+    });
+  }, 30000);
+//  let url = "http://202.120.40.8:30454/user/users/improvip;
+//            let formData = new FormData();
+//            formData.append("id", id);
+//            console.log(id);
+//
+//   fetch(url, {
+//       method: 'POST',
+//       headers: {
+//           'Authorization': "bearer c13ecc9d-21b2-4ce1-9399-501e9672b35d"
+//       },
+//       body: formData,
+//   })
+//       .then((response) => {
+//           return response.text()
+//       })
+//       .then((result) => {
+//           console.log(result)
+//           console.log(result.isVIP);
+//           console.log(result.date);
+//           await AsyncStorage.setItem('date', result.date).then(() => {
+//                 setTimeout(()=> {
+//               }, 1000)
+//           });
+//            await AsyncStorage.setItem('isVIP', 1).then(() => {
+//                  setTimeout(()=> {
+//                }, 1000)
+//            });
+//       })
+//       .catch((error) => {
+//           console.log(error)
+//       });
+
+
+};
+
 export default class WalletScreen extends React.Component {
-    _retrieveData = async () => {
+  _retrieveData = async () => {
     try {
       const username = await AsyncStorage.getItem('username');
       const isVIP = await AsyncStorage.getItem('isVIP');
@@ -66,6 +146,7 @@ export default class WalletScreen extends React.Component {
               price="¥12"
               info={['1个月', '所有功能特权']}
               button={{ title: display2 }}
+              onButtonPress={onButtonPress}
             />
            </View>
           </View>

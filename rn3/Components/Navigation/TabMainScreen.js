@@ -84,7 +84,56 @@ class TabMainScreen extends React.Component {
                     renderTabBar={() => <ScrollableTabBar />}
                 >
                     <View tabLabel="主页">
-                        <Main></Main>
+                        <ScrollView
+                            directionalLockEnabled={true}
+                            showsVerticalScrollIndicator={false}
+                            bounces={false}>
+                            <TimerPhoto></TimerPhoto>
+                            <View style={{ width: winHeight, backgroundColor: 'rgba(255,255,255,1)', marginTop: 5 }}>
+
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Harbin')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/5.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('HongKong')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/6.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Chengdu')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/7.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Macao')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/8.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Nanjing')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/9.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Suzhou')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/10.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Tokyo')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/11.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('LosAngeles')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/12.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Paris')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/13.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('London')}>
+                                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/14.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+                        </ScrollView>
                     </View>
                     <Text tabLabel='热门景点'>My</Text>
                     <Text tabLabel='旅行攻略'>favorite</Text>
@@ -158,6 +207,126 @@ class TabMainScreen extends React.Component {
 //         )
 //     }
 // }
+class MainList extends React.Component {
+    render() {
+        console.log(winWidth)
+        console.log(winHeight)
+        return (
+            <View style={{ width: winHeight, backgroundColor: 'rgba(255,255,255,1)', marginTop: 5 }}>
+
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Harbin')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/5.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('HongKong')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/6.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Chengdu')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/7.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Macao')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/8.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Nanjing')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/9.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Suzhou')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/10.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Tokyo')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/11.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('LosAngeles')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/12.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', marginBottom: 5 }}>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('Paris')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/13.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.props.navigation.navigate('London')}>
+                        <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/14.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        )
+    }
+}
+
+class TimerPhoto extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            currentPage: 0,
+        }
+    }
+    render() {
+        return (
+
+            <ScrollView
+                ref="ScrollView"
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={true}
+                onMomentumScrollEnd={(e) => this.onAnimationEnd(e)}
+                style={{ height: WH * 584 }}
+            >
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/1.png' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/2.png' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/3.png' }} style={{ width: winWidth, height: WH * 584 }} />
+                <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/4.png' }} style={{ width: winWidth, height: WH * 584 }} />
+            </ScrollView>
+        )
+    }
+    componentDidMount() {
+        this.startTimer();
+    }
+    onScrollBeginDrag() {
+        clearInterval(this.timer)
+    }
+    onScrollEndDrag() {
+        this.startTimer();
+    }
+    onAnimationEnd(e) {
+        let offSetX = e.nativeEvent.contentOffset.x;
+        this.setState({
+            currentPage: Math.floor(offSetX / winWidth)
+        })
+    }
+
+
+
+    startTimer() {
+        let ScrollView = this.refs.ScrollView;
+        this.timer = setInterval(() => {
+            let activePage = 0;
+            if (this.state.currentPage >= 4) {
+                activePage = 0;
+            } else {
+                activePage = this.state.currentPage + 1;
+            }
+            this.setState({
+                currentPage: activePage
+            })
+            let timerX = activePage * winWidth;
+            ScrollView.scrollTo({
+                x: timerX,
+                animated: true
+            })
+        }, 2500)
+    }
+
+    componentWillUnmount() {
+        this.timer && clearInterval(this.timer);
+    }
+}
 
 class MyCustomCenterComponent extends React.Component {
     state = {
@@ -256,6 +425,46 @@ const styles = StyleSheet.create({
     innerListView: {
         marginLeft: (winWidth - 584 * WW * 2) / 3,
         marginTop: WH * 15,
+    },
+    textstyle: {
+        fontSize: 48 / 4,
+        color: '#ff9cec'
+    },
+    navsBottom: {
+        width: winWidth,
+        flex: 1,
+        top: 0,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        backgroundColor: 'rgba(255,255,255,0)',
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    icon: {
+        width: 30,
+        height: 30,
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
+    listViewStyle: {
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    innerListView: {
+        marginLeft: (winWidth - 584 * WW * 2) / 3,
+        marginTop: 5,
     },
     textstyle: {
         fontSize: 48 / 4,

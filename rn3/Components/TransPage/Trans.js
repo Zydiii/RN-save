@@ -10,10 +10,19 @@ import {
     Image,
     StatusBar,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    Text,
+    Modal
 } from 'react-native'
-import ActionButton from 'react-native-action-button';
-// import Icon1 from 'react-native-vector-icons/Ionicons';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Dialog, {
+    DialogTitle,
+    DialogContent,
+    DialogFooter,
+    DialogButton,
+    SlideAnimation,
+    ScaleAnimation,
+} from 'react-native-popup-dialog';
 import JMessage from 'jmessage-react-plugin';
 import { SearchBar, Header, Icon } from 'react-native-elements';
 import { createBottomTabNavigator, createAppContainer, DrawerActions } from "react-navigation";
@@ -29,6 +38,14 @@ const AuroraIController = IMUI.AuroraIMUIController
 const window = Dimensions.get('window')
 
 var themsgid = 1
+
+// const images = [{
+//     // Simplest usage.
+//     url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+//     props: {
+//         // headers: ...
+//     }
+// }]
 
 function constructNormalMessage() {
 
@@ -97,6 +114,12 @@ export default class TestRNIMUI extends Component {
             inputViewLayout: { width: window.width, height: initHeight, },
             isAllowPullToRefresh: true,
             navigationBar: {},
+            customBackgroundDialog: false,
+            defaultAnimationDialog: false,
+            scaleAnimationDialog: false,
+            slideAnimationDialog: false,
+            pic: '',
+            images: []
         }
 
 
@@ -121,7 +144,7 @@ export default class TestRNIMUI extends Component {
         // //     console.log(message)
         // //     alert("收到消息")
         // //   }
-          
+
         // // JMessage.addReceiveMessageListener(listener) // 添加监听
 
         // JMessage.getHistoryMessages({
@@ -151,7 +174,7 @@ export default class TestRNIMUI extends Component {
         //         var desc = error.description
         //     })
 
-    
+
 
     }
 
@@ -248,7 +271,21 @@ export default class TestRNIMUI extends Component {
     }
 
     onMsgClick(message) {
-        // console.log(message)
+        console.log(message)
+        if (message.msgType == 'image' && message.isOutgoing == false) {
+            this.setState({
+                slideAnimationDialog: true,
+                pic: message.mediaPath,
+                images: [{
+                    // Simplest usage.
+                    url: message.mediaPath,
+                    props: {
+                        // headers: ...
+                    }
+                }]
+            })
+        }
+
         // Alert.alert("message", JSON.stringify(message))
     }
 
@@ -377,11 +414,17 @@ export default class TestRNIMUI extends Component {
     getTextTranslationFromApiAsync = async (text) => {
 
         let url = 'http://202.120.40.8:30454/translate/translate/text'
+        const from = await AsyncStorage.getItem('from')
+        console.log(from)
+        const to = await AsyncStorage.getItem('to')
+        console.log(to)
+        const iid = await AsyncStorage.getItem('id')
+        const id = parseFloat(iid)
         let formData = new FormData()
         formData.append("sentence", text)
-        formData.append("from", 'auto')
-        formData.append("to", 'zh-CHS')
-        formData.append("id", 1)
+        formData.append("from", from)
+        formData.append("to", to)
+        formData.append("id", id)
         const userToken = await AsyncStorage.getItem('userToken', '');
         console.log('userToken')
         console.log(userToken)
@@ -395,6 +438,7 @@ export default class TestRNIMUI extends Component {
         })
             .then((response) => {
                 if (!response.ok) {
+                    console.log(response)
                     throw new Error('Invalid')
                 }
                 console.log(response)
@@ -470,6 +514,10 @@ export default class TestRNIMUI extends Component {
 
     UploadVoice = async (pathTo) => {
         const userToken = await AsyncStorage.getItem('userToken', '');
+        const from = await AsyncStorage.getItem('from')
+        const to = await AsyncStorage.getItem('to')
+        const iid = await AsyncStorage.getItem('id')
+        const id = parseFloat(iid)
         RNFS.readFile(pathTo, 'base64')
             .then((content) => {
                 console.log(content)
@@ -477,10 +525,9 @@ export default class TestRNIMUI extends Component {
                 let formData = new FormData();
                 this.tmp = content
                 formData.append("voice", this.tmp);
-                formData.append("id", '1');
-                formData.append("from", "en")
-                formData.append("to", "zh-CHS")
-                userToken = '2e447211-3c19-426c-ad3c-82ee1365c08f'
+                formData.append("id", id);
+                formData.append("from", from)
+                formData.append("to", to)
 
                 fetch(url, {
                     credentials: 'include',
@@ -596,26 +643,51 @@ export default class TestRNIMUI extends Component {
 
     UploadPic = async (pathTo) => {
         const userToken = await AsyncStorage.getItem('userToken', '');
+        const from = await AsyncStorage.getItem('from')
+        const to = await AsyncStorage.getItem('to')
+        const iid = await AsyncStorage.getItem('id')
+        const id = parseFloat(iid)
+        var message = constructNormalMessage()
+        message.msgType = "custom"
+        message.status = "send_succeed"
+        message.isOutgoing = false
+        message.content = '小游正在努力翻译中，请稍作等待 > <'
+        // message.contentSize = { 'height': 100, 'width': 200 }
+        message.extras = { "extras": "fdfsf" }
+        var user = {
+            userId: "",
+            displayName: "",
+            avatarPath: ""
+        }
+        user.displayName = ""
+        user.avatarPath = "http://pv18mucav.bkt.clouddn.com/Qs.Picture.view.png"
+        message.fromUser = user
+        AuroraIController.appendMessages([message]);
+
         RNFS.readFile(pathTo, 'base64')
             .then((content) => {
                 let url = "http://202.120.40.8:30454/translate/translate/photo"
                 let formData = new FormData();
                 this.tmp = content
                 formData.append("picture", this.tmp);
-                formData.append("id", '1');
-                formData.append("from", "auto")
-                formData.append("to", "zh-CHS")
+                formData.append("id", id);
+                formData.append("from", from)
+                formData.append("to", to)
                 // userToken = '2e447211-3c19-426c-ad3c-82ee1365c08f'
+                console.log(content)
 
                 fetch(url, {
                     credentials: 'include',
                     method: 'POST',
                     headers: {
                         // 'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + '2e447211-3c19-426c-ad3c-82ee1365c08f'
+                        'Authorization': 'Bearer ' + userToken
                     },
                     body: formData
                 }).then((response) => {
+                    if (!response.ok) {
+                        throw ('bad')
+                    }
                     return response.text();
                 })
                     .then((myJson) => {
@@ -720,6 +792,7 @@ export default class TestRNIMUI extends Component {
     }
 
     render() {
+        console.log(this.state.images)
         return (
             <View style={styles.container}>
                 <Header
@@ -736,14 +809,65 @@ export default class TestRNIMUI extends Component {
                             color='#ffffff' />
                     </TouchableOpacity>}
                     // centerComponent={<MyCustomCenterComponent />}
-                    rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+                    rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('ChangeLang')}>
                         <Icon
-                            name='location'
-                            type='evilicon'
-                            size={30}
+                            name='dots-three-vertical'
+                            type='entypo'
+                            size={15}
                             color='#ffffff' />
                     </TouchableOpacity>}
                 />
+                <Modal visible={this.state.slideAnimationDialog} transparent={true}>
+                    <Header
+                        statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+                        containerStyle={{ backgroundColor: "white" }}
+                        placement="left"
+                        backgroundImage={{ uri: 'http://pv18mucav.bkt.clouddn.com/016%20Deep%20Blue.png' }}
+                        // leftComponent={{ icon: 'menu', color: '#fff' }}
+                        // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                        // rightComponent={{ icon: 'home', color: '#fff' }}
+                        leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.setState({slideAnimationDialog: false})}>
+                            <Icon
+                                name='arrow-left'
+                                type='evilicon'
+                                size={30}
+                                color='#ffffff' />
+                        </TouchableOpacity>}
+                    // centerComponent={<MyCustomCenterComponent />}
+                    // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('ChangeLang')}>
+                    //     <Icon
+                    //         name='dots-three-vertical'
+                    //         type='entypo'
+                    //         size={15}
+                    //         color='#ffffff' />
+                    // </TouchableOpacity>}
+                    />
+                    <ImageViewer imageUrls={this.state.images} backgroundColor="white" saveToLocalByLongPress={false}s />
+                </Modal>
+                <Dialog
+                    onDismiss={() => {
+                        this.setState({ slideAnimationDialog: false });
+                    }}
+                    onTouchOutside={() => {
+                        this.setState({ slideAnimationDialog: false });
+                    }}
+                    visible={this.state.slideAnimationDialog}
+                    dialogTitle={<DialogTitle title="翻译结果" />}
+                    dialogAnimation={new SlideAnimation({ slideFrom: 'bottom' })}
+                >
+                    <DialogContent>
+                        <Image
+                            style={{
+                                width: 360,
+                                height: 500,
+                                resizeMode: 'contain',
+                            }}
+                            source={{
+                                uri: this.state.pic
+                            }}
+                        />
+                    </DialogContent>
+                </Dialog>
                 <MessageListView style={this.state.messageListLayout}
                     ref="MessageList"
                     isAllowPullToRefresh={true}

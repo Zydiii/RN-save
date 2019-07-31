@@ -21,6 +21,7 @@ import * as Animatable from 'react-native-animatable'
 import { BackHandler } from 'react-native';
 var token = ''
 var status = 0
+var json = ''
 
 export default class SignUpForm extends Component {
   constructor(props) {
@@ -232,6 +233,10 @@ export default class SignUpForm extends Component {
     formData.append("username", this.state.displayName)
     formData.append("password", this.state.password)
     formData.append("email", this.state.email)
+    formData.append("phone", this.state.phone)
+    formData.append("sex", '')
+
+
     return fetch(url, {
       method: 'POST',
       body: formData
@@ -289,18 +294,64 @@ export default class SignUpForm extends Component {
     // TODO: do something
     this.setState({ errMsg: '登录中...' })
     await this.LogAction()
-    await AsyncStorage.setItem('userToken', token).then(() => {
-      setTimeout(() => {
-        // this._handleGoBack()
-      }, 1000)
-    });
+    await AsyncStorage.setItem('userToken', token)
+    // .then(() => {
+    //   setTimeout(() => {
+    //     // this._handleGoBack()
+    //   }, 1000)
+    // });
     const userToken = await AsyncStorage.getItem('userToken', '');
     console.log('userToken')
     console.log(userToken)
     token = ''
     if (userToken != null) {
+      await this.getInfo(userToken)
+      console.log('得到信息')
+      console.log(json.id)
+      await AsyncStorage.setItem('username', json.username.toString())
+      await AsyncStorage.setItem('id', json.id.toString())
+      await AsyncStorage.setItem('vip', json.vip.toString())
+      await AsyncStorage.setItem('vipdate', json.vipdate.toString())
+      await AsyncStorage.setItem('from', 'auto')
+      await AsyncStorage.setItem('to', 'zh-CHS')
+
+      // const id = await AsyncStorage.getItem('from', '');
+      // console.log('from')
+      // console.log(id)
+
       this.props.goToHomeScreen()
     }
+  }
+
+  async getInfo(userToken) {
+
+    let url = 'http://202.120.40.8:30454/users/users/username/' + this.state.email;
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + userToken);
+
+    return fetch(url, {
+      method: 'GET',
+      headers: headers,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to Log in')
+        }
+        console.log(response)
+        return response.json()
+
+      })
+      .then(jsons => {
+        console.log(jsons.id)
+        json = jsons
+        console.log("信息")
+        console.log(json.id)
+        // return 
+        // return json.access_token
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   _handleSignUp = async () => {

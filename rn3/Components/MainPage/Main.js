@@ -71,42 +71,42 @@ class MainList extends React.Component {
       <View style={{ width: winHeight, backgroundColor: 'rgba(255,255,255,1)', marginTop: 5 }}>
         
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Harbin')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/5.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('HongKong')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/6.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Chengdu')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/7.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Macao')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/8.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Nanjing')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/9.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Suzhou')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/10.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Tokyo')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/11.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('LosAngeles')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/12.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 5 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('Paris')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/13.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.navigation.navigate('London')}>
               <Image source={{ uri: 'http://pv18mucav.bkt.clouddn.com/14.png' }} style={{ width: 170, height: 100, marginLeft: 5, marginRight: 5 }} />
             </TouchableOpacity>
           </View>

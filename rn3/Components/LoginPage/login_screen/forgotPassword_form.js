@@ -52,22 +52,23 @@ export default class ForgotPassForm extends Component {
     const animation = this.state.init ? 'bounceInUp' : 'bounceOutDown'
     const errorMessage = this.state.errMsg ?
       <Text style={styles.errMsg}>{this.state.errMsg}</Text>
-    : null
+      : null
 
     return (
       <Animatable.View
-      animation={animation}
-      style={styles.container}
-      onAnimationEnd={this._handleAnimEnd.bind(this)}>
+        animation={animation}
+        style={styles.container}
+        onAnimationEnd={this._handleAnimEnd.bind(this)}>
         <Text style={styles.title}>Forgot Password</Text>
         {errorMessage}
         <View style={[styles.inputContainer, { marginBottom: 10 }]}>
           <TextInput
-          style={styles.inputField}
-          underlineColorAndroid='transparent'
-          placeholder='请输入您的邮箱'
-          placeholderTextColor='#999999'
-          onChangeText={(text) => this.setState({ email: text })}
+            style={styles.inputField}
+            underlineColorAndroid='transparent'
+            placeholder='请输入您的邮箱'
+            placeholderTextColor='#999999'
+            keyboardType='email-address'
+            onChangeText={(text) => this.setState({ email: text })}
           />
         </View>
         <View style={styles.btnContainers}>
@@ -81,8 +82,37 @@ export default class ForgotPassForm extends Component {
     )
   }
 
-  _handleForgotPass() {
-    // this.setState({errMsg: 'Please Wait...'})
+  async _handleForgotPass() {
+    this.setState({ errMsg: '请等待' })
+
+    let url = 'http://202.120.40.8:30454/users/un/refindPassword?email=' + this.state.email
+
+    return fetch(url, {
+      method: 'GET',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          this.setState({
+            errMsg: '邮件发送失败，请稍候再试'
+          }, () => {
+            throw new Error('failed email')
+          })
+        }
+        console.log(response)
+        return response.text()
+      })
+      .then((result) => {
+        console.log(result)
+        this.setState({
+          errMsg: '邮件已经成功发送，请登录邮箱查看'
+        })
+        // token = result
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
 
     // firebaseApp.auth().sendPasswordResetEmail(this.state.email).then(()=> {
     //   this.setState({errMsg: 'An email has been sent!'})

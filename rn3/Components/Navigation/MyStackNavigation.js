@@ -25,43 +25,24 @@ import WalletScreen from "../MinePage/WalletScreen"
 import NotSupperMembers from "../MinePage/NotSupperMembers"
 import SuperMenmbers from "../MinePage/SuperMembers"
 import Room from "../MinePage/Room"
+import Chengdu from "../Travels/Chengdu"
+import HongKong from "../Travels/HongKong"
+import London from "../Travels/London"
+import LosAngeles from "../Travels/LosAngeles"
+import Macao from "../Travels/Macao"
+import Nanjing from "../Travels/Nanjing"
+import Paris from "../Travels/Paris"
+import Suzhou from "../Travels/Suzhou"
+import Tokyo from "../Travels/Tokyo"
+import Harbin from "../Travels/Harbin"
 
 const MyStackNavigation = createStackNavigator({
     Main: {
         screen: TabMainScreen,
         navigationOptions: ({ navigation }) => ({
-            // headerTitleStyle: {
-            //     alignSelf: 'center',
-            // },
             header: null
-            // headerLeft: (
-            //     // <Button
-            //     //     title='Menu'
-            //     //     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-            //     // />
-            //     <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-            //         <Image
-            //             source={require('../Assets/NavigationPage/menu_icon.png')}
-            //             style={{ width: 30, height: 30 }}
-            //         />
-            //     </TouchableOpacity>
-            // ),
         }),
     },
-    // Main: {
-    //     screen: TabMainScreen,
-    //     navigationOptions:({ navigation }) => ({
-    //         headerTitleStyle:{
-    //             alignSelf:'center',
-    //         },
-    //         headerLeft: (
-    //             <Button
-    //                 title='Menu'
-    //                 onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-    //             />
-    //         ),
-    //     }),
-    // },
     Third: {
         screen: ThirdScreen,
         navigationOptions: ({ navigation }) => ({
@@ -73,6 +54,186 @@ const MyStackNavigation = createStackNavigator({
                     title='Menu'
                     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                 />
+            ),
+        }),
+    },
+
+    Chengdu: {
+        screen: Chengdu,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Harbin: {
+        screen: Harbin,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    HongKong: {
+        screen: HongKong,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    London: {
+        screen: London,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    LosAngeles: {
+        screen: LosAngeles,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Macao: {
+        screen: Macao,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Nanjing: {
+        screen: Nanjing,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Paris: {
+        screen: Paris,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Suzhou: {
+        screen: Suzhou,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
+    Tokyo: {
+        screen: Tokyo,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
             ),
         }),
     },
@@ -100,6 +261,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             title: '定位服务',
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -232,22 +394,23 @@ const MyStackNavigation = createStackNavigator({
         }),
     },
 
-    UserPage: {
-        screen: UserPage,
-        navigationOptions: ({ navigation }) => ({
-            headerTitleStyle: {
-                alignSelf: 'center',
-            },
-            headerLeft: (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        source={require('../Assets/NavigationPage/back_icon.png')}
-                        style={{ width: 30, height: 30 }}
-                    />
-                </TouchableOpacity>
-            ),
-        }),
-    },
+    // UserPage: {
+    //     screen: UserPage,
+    //     navigationOptions: ({ navigation }) => ({
+    //         headerTitleStyle: {
+    //             alignSelf: 'center',
+    //         },
+    //         header: null,
+    //         headerLeft: (
+    //             <TouchableOpacity onPress={() => navigation.goBack()}>
+    //                 <Image
+    //                     source={require('../Assets/NavigationPage/back_icon.png')}
+    //                     style={{ width: 30, height: 30 }}
+    //                 />
+    //             </TouchableOpacity>
+    //         ),
+    //     }),
+    // },
 
     NothingScreen: {
         screen: NothinScreen,
