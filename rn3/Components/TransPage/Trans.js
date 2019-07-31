@@ -803,9 +803,11 @@ export default class TestRNIMUI extends Component {
                     // leftComponent={{ icon: 'menu', color: '#fff' }}
                     // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
                     // rightComponent={{ icon: 'home', color: '#fff' }}
-                    leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+                    leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.goBack()}>
                         <Icon
-                            name='menu'
+                            name='arrow-left'
+                            type='evilicon'
+                            size={30}
                             color='#ffffff' />
                     </TouchableOpacity>}
                     // centerComponent={<MyCustomCenterComponent />}
@@ -826,7 +828,7 @@ export default class TestRNIMUI extends Component {
                         // leftComponent={{ icon: 'menu', color: '#fff' }}
                         // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
                         // rightComponent={{ icon: 'home', color: '#fff' }}
-                        leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.setState({slideAnimationDialog: false})}>
+                        leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.setState({ slideAnimationDialog: false })}>
                             <Icon
                                 name='arrow-left'
                                 type='evilicon'
@@ -842,7 +844,7 @@ export default class TestRNIMUI extends Component {
                     //         color='#ffffff' />
                     // </TouchableOpacity>}
                     />
-                    <ImageViewer imageUrls={this.state.images} backgroundColor="white" saveToLocalByLongPress={false}s />
+                    <ImageViewer imageUrls={this.state.images} backgroundColor="white" saveToLocalByLongPress={false} s />
                 </Modal>
                 <Dialog
                     onDismiss={() => {

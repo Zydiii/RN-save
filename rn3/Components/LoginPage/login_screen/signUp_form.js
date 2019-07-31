@@ -325,19 +325,21 @@ export default class SignUpForm extends Component {
 
   async getInfo(userToken) {
 
-    let url = 'http://202.120.40.8:30454/users/users/username/' + this.state.email;
+    let url = 'http://202.120.40.8:30454/users/users/username/' + this.state.displayName;
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + userToken);
+    console.log(url)
 
     return fetch(url, {
       method: 'GET',
       headers: headers,
     })
       .then(response => {
+        console.log(response)
+
         if (!response.ok) {
           throw new Error('Failed to Log in')
         }
-        console.log(response)
         return response.json()
 
       })

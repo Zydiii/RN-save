@@ -12,13 +12,14 @@ import MainPage from "../MainPage/Main"
 import DetailScreen from "../CameraPage/DetailScreen"
 import NothinScreen from "../CameraPage/NothingScreen"
 import UserPage from "../MinePage/Mine"
+import Trans from "../TransPage/Trans"
 import ChangeLang from "../TransPage/ChangeLang"
 import GPS from "../GPSPage/GPS"
 import MasterPage from "../TransPage/MasterPage"
 import Shop from "../GPSPage/Shop"
 import Food from "../GPSPage/Food"
 import Hotel from "../GPSPage/Hotel"
-import DetailsScreen from "../MinePage/DetaisScreen"
+import Settings from "../MinePage/DetaisScreen"
 import About from "../MinePage/About"
 import Route from "../MinePage/Route"
 import WalletScreen from "../MinePage/WalletScreen"
@@ -54,6 +55,24 @@ const MyStackNavigation = createStackNavigator({
                     title='Menu'
                     onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                 />
+            ),
+        }),
+    },
+
+    Trans: {
+        screen: Trans,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
             ),
         }),
     },
@@ -255,6 +274,24 @@ const MyStackNavigation = createStackNavigator({
         }),
     },
 
+    Settings: {
+        screen: Settings,
+        navigationOptions: ({ navigation }) => ({
+            headerTitleStyle: {
+                alignSelf: 'center',
+            },
+            header: null,
+            headerLeft: (
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        source={require('../Assets/NavigationPage/back_icon.png')}
+                        style={{ width: 30, height: 30 }}
+                    />
+                </TouchableOpacity>
+            ),
+        }),
+    },
+
     GPS: {
         screen: GPS,
         navigationOptions: ({ navigation }) => ({
@@ -280,8 +317,9 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack('UserPage')}>
                     <Image
                         source={require('../Assets/NavigationPage/back_icon.png')}
                         style={{ width: 30, height: 30 }}
@@ -297,6 +335,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -314,6 +353,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -331,6 +371,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -348,6 +389,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -366,6 +408,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -377,12 +420,13 @@ const MyStackNavigation = createStackNavigator({
         }),
     },
 
-    Details: {
-        screen: DetailsScreen,
+    UserPage: {
+        screen: UserPage,
         navigationOptions: ({ navigation }) => ({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -393,24 +437,6 @@ const MyStackNavigation = createStackNavigator({
             ),
         }),
     },
-
-    // UserPage: {
-    //     screen: UserPage,
-    //     navigationOptions: ({ navigation }) => ({
-    //         headerTitleStyle: {
-    //             alignSelf: 'center',
-    //         },
-    //         header: null,
-    //         headerLeft: (
-    //             <TouchableOpacity onPress={() => navigation.goBack()}>
-    //                 <Image
-    //                     source={require('../Assets/NavigationPage/back_icon.png')}
-    //                     style={{ width: 30, height: 30 }}
-    //                 />
-    //             </TouchableOpacity>
-    //         ),
-    //     }),
-    // },
 
     NothingScreen: {
         screen: NothinScreen,
@@ -418,6 +444,7 @@ const MyStackNavigation = createStackNavigator({
             headerTitleStyle: {
                 alignSelf: 'center',
             },
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -436,6 +463,7 @@ const MyStackNavigation = createStackNavigator({
                 alignSelf: 'center',
             },
             title: '语种选择',
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -472,6 +500,7 @@ const MyStackNavigation = createStackNavigator({
                 alignSelf: 'center',
             },
             title: '购物中心',
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -490,6 +519,7 @@ const MyStackNavigation = createStackNavigator({
                 alignSelf: 'center',
             },
             title: '附近酒店',
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -508,6 +538,7 @@ const MyStackNavigation = createStackNavigator({
                 alignSelf: 'center',
             },
             title: '周边美食',
+            header: null,
             headerLeft: (
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image

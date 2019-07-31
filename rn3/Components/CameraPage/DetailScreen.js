@@ -174,11 +174,11 @@ export default class DetailsScreen extends React.Component {
   }
 
   getBaike = async (landmark) => {
-    var userToken = await AsyncStorage.getItem('userToken', '');
+    const userToken = await AsyncStorage.getItem('userToken', '');
     console.log(userToken)
     let url = "http://202.120.40.8:30454/imgidentify/imgidentify/baike?keyword=" + landmark;
     console.log(landmark)
-    userToken = 'c13ecc9d-21b2-4ce1-9399-501e9672b35d'
+    // userToken = 'c13ecc9d-21b2-4ce1-9399-501e9672b35d'
 
     fetch(url, {
       method: 'GET',

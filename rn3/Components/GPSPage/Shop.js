@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, AsyncStorage, ListView, FlatList, Image, ScrollView } from "react-native";
-import { ListItem } from 'react-native-elements'
+import { StyleSheet, View, Text, AsyncStorage, ListView, FlatList, Image, ScrollView, TouchableOpacity } from "react-native";
+import { ListItem, Header, Icon } from 'react-native-elements'
 var roundData = ''
 var longtitude = ''
 var latitude = ''
@@ -42,8 +42,27 @@ export default class Shop extends React.Component {
 
     async getResult() {
         for (var i = 0; i < roundData.length; i++) {
-            var url = roundData[i].detail_info.detail_url
-            this.getPic(url, i)
+            // var url = roundData[i].detail_info.detail_url
+            // this.getPic(url, i)
+            this.setState({
+                // result: newlist,
+                list: [
+                    {
+                        pic: 'http://pv18mucav.bkt.clouddn.com/shopping.png',
+                        name: roundData[i].name,
+                        address: roundData[i].address,
+                        city: roundData[i].city,
+                        area: roundData[i].area,
+                        telephone: roundData[i].telephone,
+                        distance: roundData[i].detail_info.distance,
+                        tag: roundData[i].detail_info.tag,
+                        price: roundData[i].detail_info.price,
+                        overall_rating: roundData[i].detail_info.overall_rating,
+                        comment_num: roundData[i].detail_info.comment_num
+                    },
+                    ...this.state.list,
+                ]
+            })
         }
     }
 
@@ -111,24 +130,50 @@ export default class Shop extends React.Component {
 
     render() {
         return (
+            <View>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+                    containerStyle={{ backgroundColor: "black" }}
+                    placement="left"
+                    backgroundImage={{ uri: 'http://pv18mucav.bkt.clouddn.com/016%20Deep%20Blue.png' }}
+                    // leftComponent={{ icon: 'menu', color: '#fff' }}
+                    // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                    // rightComponent={{ icon: 'home', color: '#fff' }}
+                    leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.navigate('GPS')}>
+                        <Icon
+                            name='arrow-left'
+                            type='evilicon'
+                            size={30}
+                            color='#ffffff' />
+                    </TouchableOpacity>}
+                // centerComponent={<MyCustomCenterComponent />}
+                // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+                //   <Icon
+                //     name='location'
+                //     type='evilicon'
+                //     size={30}
+                //     color='#ffffff' />
+                // </TouchableOpacity>}
+                />
+                <ScrollView
+                    directionalLockEnabled={true}
+                    showsVerticalScrollIndicator={false}
+                    bounces={false}>
+                    <View>
+                        {
+                            this.state.list.map((l, i) => (
+                                <ListItem
+                                    key={i}
+                                    leftAvatar={{ source: { uri: l.pic } }}
+                                    title={l.name}
+                                    subtitle={l.city}
+                                />
+                            ))
+                        }
+                    </View>
+                </ScrollView>
+            </View>
 
-            <ScrollView
-                directionalLockEnabled={true}
-                showsVerticalScrollIndicator={false}
-                bounces={false}>
-                <View>
-                    {
-                        this.state.list.map((l, i) => (
-                            <ListItem
-                                key={i}
-                                leftAvatar={{ source: { uri: l.pic } }}
-                                title={l.name}
-                                subtitle={l.city}
-                            />
-                        ))
-                    }
-                </View>
-            </ScrollView>
         )
 
     }

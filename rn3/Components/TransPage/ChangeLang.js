@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image, AsyncStorage } from "react-native";
-import { ButtonGroup, ListItem } from "react-native-elements"
+import { StyleSheet, View, Text, Image, AsyncStorage, TouchableOpacity } from "react-native";
+import { ButtonGroup, ListItem, Header, Icon } from "react-native-elements"
 import Picker from 'react-native-wheel-picker'
 var PickerItem = Picker.Item;
 
@@ -145,6 +145,30 @@ export default class ChangeLang extends React.Component {
         return (
 
             <View>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+                    containerStyle={{ backgroundColor: "black" }}
+                    placement="left"
+                    backgroundImage={{ uri: 'http://pv18mucav.bkt.clouddn.com/016%20Deep%20Blue.png' }}
+                    // leftComponent={{ icon: 'menu', color: '#fff' }}
+                    // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                    // rightComponent={{ icon: 'home', color: '#fff' }}
+                    leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.navigate('Trans')}>
+                        <Icon
+                            name='arrow-left'
+                            type='evilicon'
+                            size={30}
+                            color='#ffffff' />
+                    </TouchableOpacity>}
+                // centerComponent={<MyCustomCenterComponent />}
+                // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+                //   <Icon
+                //     name='location'
+                //     type='evilicon'
+                //     size={30}
+                //     color='#ffffff' />
+                // </TouchableOpacity>}
+                />
                 <View style={styles.ButtonStyle}>
                     <ButtonGroup
                         onPress={this.updateIndex}
@@ -198,6 +222,7 @@ export default class ChangeLang extends React.Component {
 
         return (
             <View style={styles.container}>
+                
                 <Picker style={{ width: 150, height: 180 }}
                     selectedValue={this.state.selectedItem1}
                     itemStyle={{ color: "black", fontSize: 26 }}

@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, ScrollView, AsyncStorage, TouchableOpacity, Linking } from 'react-native';
-import { Avatar, Divider, Card, ListItem, Button, Icon, Rating, PricingCard } from 'react-native-elements';
+import { Avatar, Divider, Card, Header, Button, Icon, Rating, PricingCard } from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import LottieView from 'lottie-react-native';
 
@@ -103,31 +103,56 @@ export default class NotSuperMembers extends React.Component {
   render() {
     this._retrieveData();
     return (
-      <ScrollView>
-        <Card
-          style={{ backgroundColor: '#dae9f4' }}
-        >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 10 }}>
-            <Avatar
-              width={60}
-              height={60}
-              source={{
-                uri: 'http://pv18mucav.bkt.clouddn.com/IMG_7948.JPG',
-              }}
-              activeOpacity={0.7}
-              avatarStyle={{ borderRadius: 145 / 2 }}
-              overlayContainerStyle={{ backgroundColor: 'transparent' }}
-            />
-            <View>
-              <Text style={{ fontSize: 20, color: '#333030' }}>{this.state.username}</Text>
-              <Text style={{ fontSize: 14, color: '#333030' }}>您还不是VIP会员</Text>
+      <View>
+        <Header
+          statusBarProps={{ barStyle: 'light-content', translucent: true, backgroundColor: 'transparent' }}
+          containerStyle={{ backgroundColor: "black" }}
+          placement="left"
+          backgroundImage={{ uri: 'http://pv18mucav.bkt.clouddn.com/016%20Deep%20Blue.png' }}
+          // leftComponent={{ icon: 'menu', color: '#fff' }}
+          // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+          // rightComponent={{ icon: 'home', color: '#fff' }}
+          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.navigate('UserPage')}>
+            <Icon
+              name='arrow-left'
+              type='evilicon'
+              size={30}
+              color='#ffffff' />
+          </TouchableOpacity>}
+        // centerComponent={<MyCustomCenterComponent />}
+        // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+        //   <Icon
+        //     name='location'
+        //     type='evilicon'
+        //     size={30}
+        //     color='#ffffff' />
+        // </TouchableOpacity>}
+        />
+        <ScrollView>
+          <Card
+            style={{ backgroundColor: '#dae9f4' }}
+          >
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 10 }}>
+              <Avatar
+                width={60}
+                height={60}
+                source={{
+                  uri: 'http://pv18mucav.bkt.clouddn.com/IMG_7948.JPG',
+                }}
+                activeOpacity={0.7}
+                avatarStyle={{ borderRadius: 145 / 2 }}
+                overlayContainerStyle={{ backgroundColor: 'transparent' }}
+              />
+              <View>
+                <Text style={{ fontSize: 20, color: '#333030' }}>{this.state.username}</Text>
+                <Text style={{ fontSize: 14, color: '#333030' }}>您还不是VIP会员</Text>
+              </View>
+              <View>
+                <Image style={{ width: 60, height: 60 }}></Image>
+              </View>
             </View>
-            <View>
-              <Image style={{ width: 60, height: 60 }}></Image>
-            </View>
-          </View>
-        </Card>
-        {/* <Card
+          </Card>
+          {/* <Card
           title='我的特权'
         >
           <ScrollView horizontal={true}>
@@ -170,79 +195,81 @@ export default class NotSuperMembers extends React.Component {
 
         </Card> */}
 
-        <Card
-          title='开通会员尊享更多特权'
-        >
-          <ScrollView horizontal={true}>
+          <Card
+            title='开通会员尊享更多特权'
+          >
+            <ScrollView horizontal={true}>
 
-            <View style={{ width: 140, }}>
-              <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
-                <Avatar
-                  width={40}
-                  height={40}
-                  source={require('./Assets/MinePage/yuyin.png')}
-                  activeOpacity={0.7}
-                  avatarStyle={{ borderRadius: 145 / 2 }}
-                  overlayContainerStyle={{ backgroundColor: 'transparent' }}
-                />
-                <View>
-                  <Text style={{ fontSize: 16, color: '#f9a11b' }}>语音翻译</Text>
+              <View style={{ width: 140, }}>
+                <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
+                  <Avatar
+                    width={40}
+                    height={40}
+                    source={require('./Assets/MinePage/yuyin.png')}
+                    activeOpacity={0.7}
+                    avatarStyle={{ borderRadius: 145 / 2 }}
+                    overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                  />
+                  <View>
+                    <Text style={{ fontSize: 16, color: '#f9a11b' }}>语音翻译</Text>
+                  </View>
+
                 </View>
-
+                <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>多语种语音翻译</Text>
               </View>
-              <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>多语种语音翻译</Text>
-            </View>
-            <View style={{ width: 140, }}>
-              <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
-                <Avatar
-                  width={40}
-                  height={40}
-                  source={require('./Assets/MinePage/ad.png')}
-                  activeOpacity={0.7}
-                  avatarStyle={{ borderRadius: 145 / 2 }}
-                  overlayContainerStyle={{ backgroundColor: 'transparent' }}
-                />
-                <View>
-                  <Text style={{ fontSize: 16, color: '#f9a11b' }}>广告特权</Text>
+              <View style={{ width: 140, }}>
+                <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
+                  <Avatar
+                    width={40}
+                    height={40}
+                    source={require('./Assets/MinePage/ad.png')}
+                    activeOpacity={0.7}
+                    avatarStyle={{ borderRadius: 145 / 2 }}
+                    overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                  />
+                  <View>
+                    <Text style={{ fontSize: 16, color: '#f9a11b' }}>广告特权</Text>
+                  </View>
+
                 </View>
-
+                <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>自动隐藏广告</Text>
               </View>
-              <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>自动隐藏广告</Text>
-            </View>
-            <View style={{ width: 140, }}>
-              <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
-                <Avatar
-                  width={40}
-                  height={40}
-                  source={require('./Assets/MinePage/zhuanjiafudao.png')}
-                  activeOpacity={0.7}
-                  avatarStyle={{ borderRadius: 145 / 2 }}
-                  overlayContainerStyle={{ backgroundColor: 'transparent' }}
-                />
-                <View>
-                  <Text style={{ fontSize: 16, color: '#f9a11b' }}>专家翻译</Text>
+              <View style={{ width: 140, }}>
+                <View style={{ width: 100, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', }}>
+                  <Avatar
+                    width={40}
+                    height={40}
+                    source={require('./Assets/MinePage/zhuanjiafudao.png')}
+                    activeOpacity={0.7}
+                    avatarStyle={{ borderRadius: 145 / 2 }}
+                    overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                  />
+                  <View>
+                    <Text style={{ fontSize: 16, color: '#f9a11b' }}>专家翻译</Text>
+                  </View>
+
                 </View>
-
+                <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>专家翻译准确率更高</Text>
               </View>
-              <Text style={{ fontSize: 12, color: '#333030', marginLeft: 5, marginTop: 5 }}>专家翻译准确率更高</Text>
-            </View>
 
 
 
-          </ScrollView>
+            </ScrollView>
 
-        </Card>
-        <View style={{ marginTop: 20 }}>
-          <PricingCard
-            color="#4f9deb"
-            title="开通会员"
-            price="¥12"
-            info={['1个月', '所有功能特权']}
-            button={{ title: '立即开通' }}
-            onButtonPress={onButtonPress}
-          />
-        </View>
-      </ScrollView>
+          </Card>
+          <View style={{ marginTop: 20 }}>
+            <PricingCard
+              color="#4f9deb"
+              title="开通会员"
+              price="¥12"
+              info={['1个月', '所有功能特权']}
+              button={{ title: '立即开通' }}
+              onButtonPress={onButtonPress}
+            />
+          </View>
+        </ScrollView>
+
+      </View>
 
     )
   }

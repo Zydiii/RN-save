@@ -317,7 +317,7 @@ export default class CameraScreen extends React.Component {
           }}
           style={{
             flex: 1,
-            marginTop: 90
+            marginTop: 130
           }}
           type={this.state.type}
           flashMode={this.state.flash}
@@ -405,7 +405,7 @@ export default class CameraScreen extends React.Component {
     } else {
       return <View />;
     }
-    
+
   }
 
   render() {
@@ -422,19 +422,21 @@ export default class CameraScreen extends React.Component {
         // leftComponent={{ icon: 'menu', color: '#fff' }}
         // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
         // rightComponent={{ icon: 'home', color: '#fff' }}
-        leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+        leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.goBack()}>
           <Icon
-            name='menu'
-            color='#ffffff' />
-        </TouchableOpacity>}
-        // centerComponent={<MyCustomCenterComponent />}
-        rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
-          <Icon
-            name='location'
+            name='arrow-left'
             type='evilicon'
             size={30}
             color='#ffffff' />
         </TouchableOpacity>}
+      // centerComponent={<MyCustomCenterComponent />}
+      // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+      //   <Icon
+      //     name='location'
+      //     type='evilicon'
+      //     size={30}
+      //     color='#ffffff' />
+      // </TouchableOpacity>}
       />
 
       {/* } */}

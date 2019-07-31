@@ -62,19 +62,21 @@ export default class MainScreen extends React.Component {
           // leftComponent={{ icon: 'menu', color: '#fff' }}
           // centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
           // rightComponent={{ icon: 'home', color: '#fff' }}
-          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+          leftComponent={<TouchableOpacity style={{ marginRight: 0 }} onPress={() => this.props.navigation.goBack()}>
             <Icon
-              name='menu'
-              color='#ffffff' />
-          </TouchableOpacity>}
-          // centerComponent={<MyCustomCenterComponent />}
-          rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
-            <Icon
-              name='location'
+              name='arrow-left'
               type='evilicon'
               size={30}
               color='#ffffff' />
           </TouchableOpacity>}
+          // centerComponent={<MyCustomCenterComponent />}
+          // rightComponent={<TouchableOpacity onPress={() => this.props.navigation.navigate('GPS')}>
+          //   <Icon
+          //     name='location'
+          //     type='evilicon'
+          //     size={30}
+          //     color='#ffffff' />
+          // </TouchableOpacity>}
         />
         <View style={{ flex: 3, flexDirection: 'row' }}>
           <View
@@ -163,7 +165,7 @@ export default class MainScreen extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
+          {/* <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet')}>
               <View style={cellStyle.containerStyle}>
                 <View style={cellStyle.leftViewStyle}>
@@ -173,7 +175,7 @@ export default class MainScreen extends React.Component {
                 </View>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Room')}>
               <View style={cellStyle.containerStyle}>
